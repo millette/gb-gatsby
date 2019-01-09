@@ -1,4 +1,4 @@
-# Summary
+# Sommaire
 
 * [Introduction](README.md)
   * [Objectifs](objectifs.md)
