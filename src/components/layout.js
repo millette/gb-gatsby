@@ -21,18 +21,30 @@ const Layout = ({ children }) => (
           <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
+            title="default"
             integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA="
             crossorigin="anonymous"
           />
+
+          <link
+            rel="alternate stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.7.2/cerulean/bulmaswatch.min.css"
+            title="cerulean"
+          />
+
+          <link
+            rel="alternate stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.7.2/darkly/bulmaswatch.min.css"
+            title="darkly"
+          />
+
+          <link
+            rel="alternate stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.7.2/flatly/bulmaswatch.min.css"
+            title="flatly"
+          />
         </Helmet>
-        <div
-          style666={{
-            margin: `0 auto`,
-            maxWidth: 960,
-            padding: `0px 1.0875rem 1.45rem`,
-            paddingTop: 0,
-          }}
-        >
+        <div>
           {children}
           <footer>© {new Date().getFullYear()}</footer>
         </div>
