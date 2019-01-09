@@ -29,7 +29,7 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     query {
-      allMarkdownRemark {
+      allMarkdownRemark(filter: { fields: { slug: { ne: "/SUMMARY/" } } }) {
         totalCount
         edges {
           node {
