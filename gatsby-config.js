@@ -55,6 +55,13 @@ module.exports = {
               replace: "/$1/$2",
             },
           },
+          {
+            resolve: "gatsby-remark-link-rewrite",
+            options: {
+              pattern: /^\/README\/$/,
+              replace: "/",
+            },
+          },
           "gatsby-remark-autolink-headers",
         ],
       },
