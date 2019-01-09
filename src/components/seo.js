@@ -10,6 +10,7 @@ function SEO({ description, lang, meta, keywords, title }) {
       render={(data) => {
         const metaDescription =
           description || data.site.siteMetadata.description
+        lang = lang || data.site.siteMetadata.lang
         return (
           <Helmet
             htmlAttributes={{
@@ -68,7 +69,6 @@ function SEO({ description, lang, meta, keywords, title }) {
 }
 
 SEO.defaultProps = {
-  lang: "en",
   meta: [],
   keywords: [],
 }
@@ -90,6 +90,7 @@ const detailsQuery = graphql`
         title
         description
         author
+        lang
       }
     }
   }

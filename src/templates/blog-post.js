@@ -8,7 +8,7 @@ import SEO from "../components/seo"
 
 export default ({ data }) => (
   <Layout>
-    <SEO title={data.markdownRemark.headings[0].value} lang="fr" />
+    <SEO title={data.markdownRemark.headings[0].value} />
     <div
       style={{ float: "left" }}
       dangerouslySetInnerHTML={{ __html: data.summary.html }}

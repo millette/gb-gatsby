@@ -4,6 +4,7 @@ module.exports = {
     description:
       "Technologies de l'information appliquées au journalisme [ou journalisme informatique] - Session d'hiver 2019.",
     author: "@jhroy",
+    lang: "fr",
   },
   plugins: [
     "gatsby-plugin-react-helmet",
