@@ -27,6 +27,13 @@ module.exports = {
       options: {
         plugins: [
           {
+            resolve: "gatsby-remark-emojis",
+            options: {
+              active: true,
+              size: 64,
+            },
+          },
+          {
             resolve: "gatsby-remark-link-rewrite",
             options: {
               pattern: /^(?!https{0,1}:\/\/)\/{0,1}(.+)\.md(#.*)?$/,
