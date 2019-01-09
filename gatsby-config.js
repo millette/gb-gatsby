@@ -19,7 +19,14 @@ module.exports = {
       options: {
         name: "miscdocs",
         path: `${__dirname}`,
-        ignore: ["**/.cache", "**/public", "**/src", "**/*.json", "**/*.js"],
+        ignore: [
+          "**/.cache",
+          "**/.git",
+          "**/public",
+          "**/src",
+          "**/*.json",
+          "**/*.js",
+        ],
       },
     },
     {
