@@ -6,14 +6,37 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
+const style1 = {
+  overflowY: "scroll",
+  height: "90vh",
+  position: "sticky",
+  top: "5vh",
+  paddingRight: "1rem",
+}
+
+const style2 = {
+  paddingLeft: "1rem",
+}
+
 export default ({ data }) => (
   <Layout>
     <SEO title={data.markdownRemark.headings[0].value} />
-    <div
-      style={{ float: "left" }}
-      dangerouslySetInnerHTML={{ __html: data.summary.html }}
-    />
-    <div dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }} />
+    <section className="section">
+      <div className="container content">
+        <div className="columns">
+          <div
+            className="column is-narrow"
+            style={style1}
+            dangerouslySetInnerHTML={{ __html: data.summary.html }}
+          />
+          <div
+            className="column"
+            style={style2}
+            dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
+          />
+        </div>
+      </div>
+    </section>
   </Layout>
 )
 
