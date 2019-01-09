@@ -36,7 +36,9 @@ module.exports = {
           {
             resolve: "gatsby-remark-images",
             options: {
-              maxWidth: 590,
+              maxWidth: 1344,
+              linkImagesToOriginal: false,
+              quality: 75,
             },
           },
           {
@@ -50,9 +52,7 @@ module.exports = {
             resolve: "gatsby-remark-link-rewrite",
             options: {
               pattern: /^(?!https{0,1}:\/\/)\/{0,1}(.+)\.md(#.*)?$/,
-              // pattern: /^(?!https{0,1}:\/\/)\/{0,1}(.+?)(?:\.md)(#.*)?$/,
-              // pattern: /^(?!https{0,1}:\/\/)\/{0,1}(.+\.md?)(#.*)?$/,
-              replace: "/$1$2",
+              replace: "/$1/$2",
             },
           },
           "gatsby-remark-autolink-headers",
