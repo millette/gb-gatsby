@@ -1,9 +1,8 @@
+// npm
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
-
-import Header from "./header"
-// import "./layout.css"
+import Helmet from "react-helmet"
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -18,7 +17,14 @@ const Layout = ({ children }) => (
     `}
     render={(data) => (
       <>
-        <Header siteTitle={data.site.siteMetadata.title} />
+        <Helmet>
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
+            integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA="
+            crossorigin="anonymous"
+          />
+        </Helmet>
         <div
           style666={{
             margin: `0 auto`,
