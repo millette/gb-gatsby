@@ -5,27 +5,23 @@
  */
 
 // core
-const path = require("path")
+const { resolve } = require("path")
 
 // npm
 const { createFilePath } = require("gatsby-source-filesystem")
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
-  // console.log('node.internal.type:', node.internal.type)
-  if (node.internal.type === "MarkdownRemark") {
-    const slug = createFilePath({ node, getNode, basePath: "pages" })
-    createNodeField({
-      node,
-      name: "slug",
-      value: slug,
-    })
-  }
+  if (node.internal.type !== "MarkdownRemark") return
+  const value = createFilePath({ node, getNode, basePath: "pages" })
+  createNodeField({
+    node,
+    name: "slug",
+    value,
+  })
 }
 
 exports.createPages = ({ graphql, actions }) => {
-  // **Note:** The graphql function call returns a Promise
-  // see: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise for more info
   const { createPage } = actions
   return graphql(`
     query {
@@ -40,20 +36,15 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then((result) => {
-    // console.log(JSON.stringify(result, null, 4))
-
-    result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-      // console.log('NODE:', Object.keys(node))
+  `).then(({ data: { allMarkdownRemark: { edges } } }) =>
+    edges.forEach(({ node: { fields: { slug } } }) =>
       createPage({
-        path: node.fields.slug,
-        component: path.resolve("./src/templates/blog-post.js"),
+        path: slug,
+        component: resolve("./src/templates/blog-post.js"),
         context: {
-          // Data passed to context is available
-          // in page queries as GraphQL variables.
-          slug: node.fields.slug,
+          slug,
         },
       })
-    })
-  })
+    )
+  )
 }
