@@ -11,11 +11,11 @@ const style1 = {
   height: "90vh",
   position: "sticky",
   top: "5vh",
-  paddingRight: "1rem",
+  marginRight: "1rem",
 }
 
 const style2 = {
-  paddingLeft: "1rem",
+  marginLeft: "1rem",
 }
 
 export default ({ data }) => (
