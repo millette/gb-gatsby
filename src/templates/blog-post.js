@@ -4,9 +4,11 @@ import { graphql } from "gatsby"
 
 // self
 import Layout from "../components/layout"
+import SEO from "../components/seo"
 
 export default ({ data }) => (
   <Layout>
+    <SEO title={data.markdownRemark.headings[0].value} />
     <div
       style={{ float: "left" }}
       dangerouslySetInnerHTML={{ __html: data.summary.html }}
@@ -22,6 +24,9 @@ export const query = graphql`
     }
 
     markdownRemark(fields: { slug: { eq: $slug } }) {
+      headings(depth: h1) {
+        value
+      }
       html
       wordCount {
         paragraphs
