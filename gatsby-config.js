@@ -62,7 +62,12 @@ module.exports = {
               replace: "/",
             },
           },
-          "gatsby-remark-autolink-headers",
+          {
+            resolve: "gatsby-remark-autolink-headers",
+            options: {
+              icon: false,
+            },
+          },
 
           {
             resolve: "gatsby-remark-external-links",
@@ -71,6 +76,7 @@ module.exports = {
               rel: "noopener noreferrer",
             },
           },
+          "gatsby-remark-smartypants",
         ],
       },
     },
