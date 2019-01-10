@@ -20,7 +20,7 @@ class Menubar extends Component {
   componentDidMount() {
     setTimeout(() => {
       const styles = document.querySelectorAll(
-        'link[rel="stylesheet"],link[rel="alternate stylesheet"]'
+        "link[rel='stylesheet'],link[rel='alternate stylesheet']"
       )
       const buttons = []
       styles.forEach(({ title, disabled }) =>
@@ -34,12 +34,8 @@ class Menubar extends Component {
     // prevents some flickering
     const buttons = this.state.buttons
     this.state.styles.forEach((el, i) => {
-      if (el.title === ev.target.innerText) {
-        buttons[i].active = true
-      } else {
-        el.disabled = true
-        buttons[i].active = false
-      }
+      if (el.title !== ev.target.innerText) el.disabled = true
+      buttons[i].active = el.title === ev.target.innerText
     })
     this.setState({ buttons })
     this.state.styles.forEach((el) => {
