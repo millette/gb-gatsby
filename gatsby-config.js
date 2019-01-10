@@ -3,7 +3,7 @@ module.exports = {
     title: "EDM5240-H2019",
     description:
       "Technologies de l'information appliquées au journalisme [ou journalisme informatique] - Session d'hiver 2019.",
-    author: "@jhroy",
+    author: "@jeanhuguesroy",
     lang: "fr",
   },
   plugins: [
@@ -62,7 +62,6 @@ module.exports = {
               icon: false,
             },
           },
-
           {
             resolve: "gatsby-remark-external-links",
             options: {
