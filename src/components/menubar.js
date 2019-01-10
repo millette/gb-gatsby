@@ -1,5 +1,6 @@
 // npm
 import React, { Component } from "react"
+import { Link } from "gatsby"
 
 // self
 import Burger from "./burger.js"
@@ -60,14 +61,37 @@ class Menubar extends Component {
 
   render() {
     return (
-      <div>
-        <div className="buttons">
+      <nav
+        style={{ marginBottom: "1rem" }}
+        className="pagination is-centered is-small"
+        role="navigation"
+        aria-label="pagination"
+      >
+        {this.props.prev && (
+          <Link
+            title={this.props.prev.value}
+            className="pagination-previous"
+            to={this.props.prev.href}
+          >
+            Page précédente
+          </Link>
+        )}
+        {this.props.next && (
+          <Link
+            title={this.props.next.value}
+            className="pagination-next"
+            to={this.props.next.href}
+          >
+            Page suivante
+          </Link>
+        )}
+        <ul className="pagination-list">
           <Burger onClick={this.props.clicky} />
           {this.state.buttons.map((s, i) => (
             <StyleButton key={i} {...s} pick={this.pick} />
           ))}
-        </div>
-      </div>
+        </ul>
+      </nav>
     )
   }
 }
