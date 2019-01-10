@@ -4,29 +4,12 @@ import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 import Helmet from "react-helmet"
 
-const bulmaStyles = [
-  "cerulean",
-  "cosmo",
-  "cyborg",
-  "darkly",
-  "flatly",
-  "journal",
-  "litera",
-  "lumen",
-  "lux",
-  "materia",
-  "minty",
-  "nuclear",
-  "pulse",
-  "sandstone",
-  "simplex",
-  "slate",
-  "solar",
-  "spacelab",
-  "superhero",
-  "united",
-  "yeti",
-]
+// Themes from https://jenil.github.io/bulmaswatch/
+// cerulean cosmo cyborg darkly default flatly journal
+// litera lumen lux materia minty nuclear pulse sandstone
+// simplex slate solar spacelab superhero united yeti
+// First one is the default
+const bulmaStyles = ["flatly", "darkly", "superhero"]
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -35,24 +18,22 @@ const Layout = ({ children }) => (
         site {
           siteMetadata {
             title
+            author
           }
         }
       }
     `}
-    render={(data) => (
+    render={({
+      site: {
+        siteMetadata: { title, author },
+      },
+    }) => (
       <>
         <Helmet>
-          <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
-            title="default"
-            integrity="sha256-2pUeJf+y0ltRPSbKOeJh09ipQFYxUdct5nTY6GAXswA="
-            crossorigin="anonymous"
-          />
-          {bulmaStyles.map((title) => (
+          {bulmaStyles.map((title, i) => (
             <link
               key={title}
-              rel="alternate stylesheet"
+              rel={`${i ? "alternate " : ""}stylesheet`}
               href={`https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.7.2/${title}/bulmaswatch.min.css`}
               title={title}
             />
@@ -61,7 +42,8 @@ const Layout = ({ children }) => (
         {children}
         <footer className="footer">
           <div className="container is-fluid has-text-centered">
-            © {new Date().getFullYear()}
+            {title}
+            <br />© {new Date().getFullYear()} {author}
           </div>
         </footer>
       </>
