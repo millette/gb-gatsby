@@ -1,6 +1,9 @@
 // npm
 import React, { Component } from "react"
 
+// self
+import Burger from "./burger.js"
+
 const StyleButton = ({ title, active, pick }) => (
   <button
     onClick={pick}
@@ -15,6 +18,11 @@ class Menubar extends Component {
     super(props)
     this.state = { hidden: false, styles: [], buttons: [] }
     this.pick = this.pick.bind(this)
+    this.clicky = this.clicky.bind(this)
+  }
+
+  clicky(ev) {
+    console.log("CLICKY", ev)
   }
 
   componentDidMount() {
@@ -45,10 +53,13 @@ class Menubar extends Component {
 
   render() {
     return (
-      <div className="buttons">
-        {this.state.buttons.map((s, i) => (
-          <StyleButton key={i} {...s} pick={this.pick} />
-        ))}
+      <div>
+        <Burger onClick={this.clicky} />
+        <div className="buttons">
+          {this.state.buttons.map((s, i) => (
+            <StyleButton key={i} {...s} pick={this.pick} />
+          ))}
+        </div>
       </div>
     )
   }
