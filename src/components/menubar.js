@@ -35,6 +35,8 @@ class Menubar extends Component {
         ({ title, disabled }) =>
           title && buttons.push({ title, active: !disabled })
       )
+
+      document.querySelector("body").className = `bulma-${buttons[0].title}`
       this.setState({ styles, buttons })
     }, 0)
   }
@@ -64,8 +66,8 @@ class Menubar extends Component {
   render() {
     return (
       <div>
-        <Burger onClick={this.clicky} />
         <div className="buttons">
+          <Burger onClick={this.clicky} />
           {this.state.buttons.map((s, i) => (
             <StyleButton key={i} {...s} pick={this.pick} />
           ))}
