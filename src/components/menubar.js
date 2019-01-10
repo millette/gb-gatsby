@@ -16,13 +16,8 @@ const StyleButton = ({ title, active, pick }) => (
 class Menubar extends Component {
   constructor(props) {
     super(props)
-    this.state = { hidden: false, styles: [], buttons: [] }
+    this.state = { styles: [], buttons: [] }
     this.pick = this.pick.bind(this)
-    this.clicky = this.clicky.bind(this)
-  }
-
-  clicky(ev) {
-    console.log("CLICKY", ev)
   }
 
   componentDidMount() {
@@ -67,7 +62,7 @@ class Menubar extends Component {
     return (
       <div>
         <div className="buttons">
-          <Burger onClick={this.clicky} />
+          <Burger onClick={this.props.clicky} />
           {this.state.buttons.map((s, i) => (
             <StyleButton key={i} {...s} pick={this.pick} />
           ))}
