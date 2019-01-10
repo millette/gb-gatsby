@@ -8,18 +8,6 @@ import Menubar from "../components/menubar"
 import SEO from "../components/seo"
 import "./blog-post.css"
 
-const style1 = {
-  overflowY: "scroll",
-  height: "75vh",
-  position: "sticky",
-  top: "5vh",
-  paddingRight: "2rem",
-}
-
-const style2 = {
-  paddingLeft: "1rem",
-}
-
 class Page extends Component {
   constructor(props) {
     super(props)
@@ -32,7 +20,7 @@ class Page extends Component {
     if (hidden)
       setTimeout(() => {
         document.querySelector("#summary-toc").className = "is-hidden"
-      }, 400)
+      }, 300)
     this.setState({ hidden })
   }
 
@@ -50,16 +38,13 @@ class Page extends Component {
                   this.state.hidden ? "slide-out" : "slide-in"
                 }`}
               >
-                <div
-                  style={style1}
-                  dangerouslySetInnerHTML={{ __html: data.summary.html }}
-                />
+                <div dangerouslySetInnerHTML={{ __html: data.summary.html }} />
               </div>
               <div className="column">
                 <Menubar clicky={this.clicky} />
                 <div
                   className="content"
-                  style={style2}
+                  style={{ paddingLeft: "1rem" }}
                   dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
                 />
               </div>
