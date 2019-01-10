@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/millette/gb-gatsby#readme",
   "lint-staged": {
-    "*.{js,json,html,scss}": [
+    "*.{js,json,html,scss,css}": [
       "prettier --write",
       "git add"
     ]
