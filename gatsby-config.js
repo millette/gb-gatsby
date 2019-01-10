@@ -12,7 +12,7 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "miscdocs",
-        path: `${__dirname}`,
+        path: __dirname,
         ignore: [
           "**/.cache",
           "**/.git",
@@ -74,7 +74,6 @@ module.exports = {
       },
     },
     "gatsby-plugin-catch-links",
-    "gatsby-transformer-sharp",
     "gatsby-plugin-sharp",
     {
       resolve: "gatsby-plugin-manifest",
