@@ -5,11 +5,14 @@ import { Link } from "gatsby"
 // self
 import Burger from "./burger.js"
 
+const style = {
+  position: "sticky",
+  top: 0,
+  zIndex: 100,
+}
+
 const StyleButton = ({ title, active, pick }) => (
-  <button
-    onClick={pick}
-    className={`button is-small${active ? " is-primary" : ""}`}
-  >
+  <button onClick={pick} className={`button${active ? " is-primary" : ""}`}>
     {title}
   </button>
 )
@@ -62,8 +65,8 @@ class Menubar extends Component {
   render() {
     return (
       <nav
-        style={{ marginBottom: "1rem" }}
-        className="pagination is-centered is-small"
+        style={style}
+        className="pagination is-centered notification is-info is-radiusless"
         role="navigation"
         aria-label="pagination"
       >

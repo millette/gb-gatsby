@@ -4,6 +4,7 @@ import React from "react"
 // self
 import "./burger.css"
 
+// Thanks https://openclipart.org/detail/304239/menu
 export default ({ onClick, size = 44, thickness = 10 }) => (
   <svg
     className={`button is-text is-small burger${onClick ? " clicky" : ""}`}
