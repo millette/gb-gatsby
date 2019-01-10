@@ -66,7 +66,7 @@ class Menubar extends Component {
     return (
       <nav
         style={style}
-        className="pagination is-centered notification is-info is-radiusless"
+        className="pagination is-centered notification is-radiusless"
         role="navigation"
         aria-label="pagination"
       >
