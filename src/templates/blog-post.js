@@ -1,6 +1,7 @@
 // npm
 import React, { Component } from "react"
 import { graphql } from "gatsby"
+import visit from "unist-util-visit"
 
 // self
 import Layout from "../components/layout"
@@ -13,6 +14,10 @@ class Page extends Component {
     super(props)
     this.state = { hidden: false }
     this.clicky = this.clicky.bind(this)
+    this.pages = []
+    const visitor = ({ properties: { href }, children: [{ value }] }) =>
+      this.pages.push({ href, value })
+    visit(props.data.summary.htmlAst, { tagName: "a" }, visitor)
   }
 
   clicky(ev) {
@@ -24,11 +29,27 @@ class Page extends Component {
     this.setState({ hidden })
   }
 
+  componentDidMount() {
+    const idx = this.pages
+      .map(({ href }) => href)
+      .indexOf(document.location.pathname)
+    if (idx === -1) return
+    const prev = idx - 1
+    const next = idx + 1
+    this.setState({
+      prev: prev >= 0 && this.pages[prev],
+      next: next < this.pages.length && this.pages[next],
+    })
+  }
+
   render() {
-    const data = this.props.data
+    const {
+      summary: { html },
+      markdownRemark,
+    } = this.props.data
     return (
       <Layout>
-        <SEO title={data.markdownRemark.headings[0].value} />
+        <SEO title={markdownRemark.headings[0].value} />
         <section className="section">
           <div className="container is-fluid">
             <div className="columns">
@@ -38,14 +59,18 @@ class Page extends Component {
                   this.state.hidden ? "slide-out" : "slide-in"
                 }`}
               >
-                <div dangerouslySetInnerHTML={{ __html: data.summary.html }} />
+                <div dangerouslySetInnerHTML={{ __html: html }} />
               </div>
               <div className="column">
-                <Menubar clicky={this.clicky} />
+                <Menubar
+                  prev={this.state.prev}
+                  next={this.state.next}
+                  clicky={this.clicky}
+                />
                 <div
                   className="content"
                   style={{ paddingLeft: "1rem" }}
-                  dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
+                  dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
                 />
               </div>
             </div>
@@ -62,6 +87,7 @@ export const query = graphql`
   query($slug: String!) {
     summary: markdownRemark(fields: { slug: { eq: "/SUMMARY/" } }) {
       html
+      htmlAst
     }
 
     markdownRemark(fields: { slug: { eq: $slug } }) {
