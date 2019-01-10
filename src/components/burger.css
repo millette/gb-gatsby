@@ -1,3 +1,15 @@
+body.bulma-flatly svg.burger {
+  stroke: black;
+}
+
+body.bulma-superhero svg.burger {
+  stroke: white;
+}
+
+body.bulma-darkly svg.burger {
+  stroke: white;
+}
+
 svg.burger.clicky {
   cursor: pointer;
 }

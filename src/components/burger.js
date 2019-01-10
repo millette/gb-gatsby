@@ -1,9 +1,10 @@
 // npm
 import React from "react"
 
+// self
 import "./burger.css"
 
-export default ({ onClick, size = "24px", color = "#000", thickness = 12 }) => {
+export default ({ onClick, size = "24px", thickness = 12 }) => {
   return (
     <svg
       className={`burger${onClick ? " clicky" : ""}`}
@@ -17,7 +18,6 @@ export default ({ onClick, size = "24px", color = "#000", thickness = 12 }) => {
       <path
         strokeWidth={thickness}
         strokeLinecap="round"
-        stroke={color}
         d="M15 20L85 20M15 50L85 50M15 80L85 80"
       />
     </svg>
