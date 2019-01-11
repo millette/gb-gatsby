@@ -12,7 +12,10 @@ const style = {
 }
 
 const StyleButton = ({ title, active, pick }) => (
-  <button onClick={pick} className={`button${active ? " is-primary" : ""}`}>
+  <button
+    onClick={pick}
+    className={`button is-small${active ? " is-primary" : ""}`}
+  >
     {title}
   </button>
 )
@@ -66,7 +69,7 @@ class Menubar extends Component {
     return (
       <nav
         style={style}
-        className="pagination is-centered notification is-radiusless"
+        className="pagination is-small is-centered notification is-radiusless"
         role="navigation"
         aria-label="pagination"
       >
