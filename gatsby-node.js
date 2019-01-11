@@ -9,6 +9,10 @@ const { resolve } = require("path")
 
 // npm
 const { createFilePath } = require("gatsby-source-filesystem")
+const visit = require("unist-util-visit")
+const lunr = require("lunr")
+require("lunr-languages/lunr.stemmer.support")(lunr)
+require("lunr-languages/lunr.fr")(lunr)
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
@@ -33,19 +37,42 @@ exports.createPages = ({ graphql, actions }) => {
             fields {
               slug
             }
+            htmlAst
+            headings(depth: h1) {
+              value
+            }
           }
         }
       }
     }
-  `).then(({ data: { allMarkdownRemark: { edges } } }) =>
+  `).then(({ data: { allMarkdownRemark: { edges } } }) => {
+    const component = resolve("./src/templates/blog-post.js")
+
+    // function () since we want lunr's this
+    const idx = lunr(function() {
+      this.use(lunr.fr)
+      this.ref("slug")
+      this.field("value", { boost: 2 })
+      this.field("h1", { boost: 5 })
+
+      edges.forEach(({ node: { headings, htmlAst, fields: { slug } } }) => {
+        const h1 = headings.value
+        visit(htmlAst, { type: "text" }, ({ value }) => {
+          value = value.trim()
+          if (value) this.add({ h1, value, slug })
+        })
+      })
+    })
+
     edges.forEach(({ node: { fields: { slug } } }) =>
       createPage({
         path: slug,
-        component: resolve("./src/templates/blog-post.js"),
+        component,
         context: {
           slug,
+          idx,
         },
       })
     )
-  )
+  })
 }
