@@ -2,6 +2,7 @@
 import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
 import visit from "unist-util-visit"
+import rehypeReact from "rehype-react"
 
 // self
 import { lunr } from "../../utils"
@@ -9,6 +10,10 @@ import Layout from "../components/layout"
 import Menubar from "../components/menubar"
 import SEO from "../components/seo"
 import "./blog-post.css"
+
+const renderAst = new rehypeReact({
+  createElement: React.createElement,
+}).Compiler
 
 class Page extends Component {
   constructor(props) {
@@ -19,6 +24,8 @@ class Page extends Component {
     this.clicky = this.clicky.bind(this)
     this.change = this.change.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
+    this.htmlAst = renderAst(props.data.summary.htmlAst)
+
     // FIXME: replaces this.pages with props.pageContext.titles
     this.pages = []
 
@@ -75,10 +82,7 @@ class Page extends Component {
   }
 
   render() {
-    const {
-      summary: { html },
-      markdownRemark,
-    } = this.props.data
+    const { markdownRemark } = this.props.data
 
     return (
       <Layout>
@@ -115,7 +119,7 @@ class Page extends Component {
                   </div>
                 </div>
 
-                <div dangerouslySetInnerHTML={{ __html: html }} />
+                {this.htmlAst}
               </div>
               <div className="column">
                 <Menubar
@@ -176,7 +180,6 @@ export default Page
 export const query = graphql`
   query($slug: String!) {
     summary: markdownRemark(fields: { slug: { eq: "/SUMMARY/" } }) {
-      html
       htmlAst
     }
 
