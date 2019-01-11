@@ -1,7 +1,7 @@
 {
   "name": "gb-gatsby",
-  "version": "0.1.0",
-  "description": "##### Ce syllabus est accessible en ligne à partir de l'URL [jhroy.gitbooks.io/edm5240-h2019/](https://jhroy.gitbooks.io/edm5240-h2019/). ##### Pédagogie transparente&nbsp;: pour faire le suivi des changements apportés à ce syllabus depuis sa mise en ligne initiale, consultez la [page de ses *commits*](https://github.com/jhroy/syllabus-EDM5240-H2019/commits/master). ##### Certains éléments de ce document, dans ses versions en ligne ou PDF, sont en anglais. Veuillez m'en excuser, je n'ai pas trouvé la façon de les franciser sur [GitBook](https://www.gitbook.com).",
+  "version": "0.2.0",
+  "description": "Gitbook clone based on gatsby.",
   "scripts": {
     "build": "gatsby build",
     "clean": "rm -fr public .cache",
@@ -10,10 +10,16 @@
     "start": "npm run develop",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/millette/gb-gatsby.git"
+  "repository": "millette/gb-gatsby",
+  "author": {
+    "name": "Robin Millette",
+    "email": "robin@millette.info",
+    "url": "http://robin.millette.info"
   },
+  "engines": {
+    "node": ">= 10"
+  },
+  "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/millette/gb-gatsby/issues"
   },
