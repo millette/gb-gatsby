@@ -11,7 +11,6 @@ const { resolve } = require("path")
 
 // npm
 const { createFilePath } = require("gatsby-source-filesystem")
-// const visit = require("unist-util-visit")
 
 // self
 const { lunr } = require("./utils")
@@ -39,7 +38,6 @@ exports.createPages = ({ graphql, actions }) => {
             fields {
               slug
             }
-            htmlAst
             rawMarkdownBody
             headings(depth: h1) {
               value
@@ -59,10 +57,7 @@ exports.createPages = ({ graphql, actions }) => {
       this.field("rawMarkdownBody", { boost: 3 })
       this.field("slug", { boost: 4 })
       this.field("value", { boost: 5 })
-      // this.metadataWhitelist = ['position']
-      // let n = 0
 
-      // edges.forEach(({ node: { headings, rawMarkdownBody, htmlAst, fields: { slug } } }) => {
       edges.forEach(
         ({
           node: {
@@ -73,24 +68,9 @@ exports.createPages = ({ graphql, actions }) => {
         }) => {
           titles[slug] = value
           const o = { value, slug, rawMarkdownBody }
-          // console.log('OOO:', o)
           this.add(o)
         }
       )
-      // const h1 = headings.value
-      // ++n
-      // if (h1) this.add({ h1, slug, id: `${slug}:${n}` })
-      // if (h1) this.add({ h1, slug, value: rawMarkdownBody })
-      /*
-        visit(htmlAst, { type: "text" }, ({ value }) => {
-          value = value.trim()
-          if (value) {
-            ++n
-            this.add({ value, slug, id: `${slug}:${n}` })
-          }
-        })
-        */
-      // })
     })
 
     edges.forEach(({ node: { fields: { slug } } }) =>
