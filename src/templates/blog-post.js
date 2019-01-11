@@ -82,11 +82,14 @@ class Page extends Component {
   }
 
   render() {
-    const { markdownRemark } = this.props.data
+    const {
+      html,
+      headings: [{ value }],
+    } = this.props.data.markdownRemark
 
     return (
       <Layout>
-        <SEO title={markdownRemark.headings[0].value} />
+        <SEO title={value} />
         <section className="section">
           <div className="container is-fluid">
             <div className="columns">
@@ -161,9 +164,7 @@ class Page extends Component {
                   )}
 
                   {!this.state.results && !this.state.error && (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: markdownRemark.html }}
-                    />
+                    <div dangerouslySetInnerHTML={{ __html: html }} />
                   )}
                 </div>
               </div>
