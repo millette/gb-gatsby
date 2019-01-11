@@ -38,7 +38,8 @@ class Menubar extends Component {
           title && buttons.push({ title, active: !disabled })
       )
 
-      document.querySelector("body").className = `bulma-${buttons[0].title}`
+      if (document.querySelector("body").className.indexOf("bulma-"))
+        document.querySelector("body").className = `bulma-${buttons[0].title}`
       this.setState({ styles, buttons })
     }, 0)
   }
