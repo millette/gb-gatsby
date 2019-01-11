@@ -2,6 +2,7 @@
 import React, { Component } from "react"
 import { graphql } from "gatsby"
 import visit from "unist-util-visit"
+import lunr from "lunr"
 
 // self
 import Layout from "../components/layout"
@@ -9,11 +10,19 @@ import Menubar from "../components/menubar"
 import SEO from "../components/seo"
 import "./blog-post.css"
 
+// are these two necessary?
+require("lunr-languages/lunr.stemmer.support")(lunr)
+require("lunr-languages/lunr.fr")(lunr)
+
 class Page extends Component {
   constructor(props) {
+    // props.idx = lunr.Index.load(props.pageContext.idx)
     super(props)
-    this.state = { hidden: false }
+    const idx = lunr.Index.load(props.pageContext.idx)
+    this.state = { hidden: false, idx }
     this.clicky = this.clicky.bind(this)
+    this.change = this.change.bind(this)
+
     this.pages = []
     const visitor = ({ properties: { href }, children: [{ value }] }) =>
       this.pages.push({ href, value })
@@ -42,14 +51,34 @@ class Page extends Component {
     })
   }
 
+  change(ev) {
+    // console.log('CHANGE:', ev.target.value)
+    // this.setState({ results: this.props.idx.search('+python +github') })
+    try {
+      const results = this.state.idx.search(ev.target.value)
+      this.setState({ results })
+    } catch (e) {
+      console.error("SEARCH ERROR", e)
+    }
+  }
+
   render() {
     const {
       summary: { html },
       markdownRemark,
     } = this.props.data
+
+    // this.setState({ results: this.props.idx.search('+python +github') })
+
     return (
       <Layout>
         <SEO title={markdownRemark.headings[0].value} />
+        <section className="section">
+          <div className="container is-fluid">
+            <input onChange={this.change} />
+            <pre>{JSON.stringify(this.state.results, null, "  ")}</pre>
+          </div>
+        </section>
         <section className="section">
           <div className="container is-fluid">
             <div className="columns">
