@@ -28,13 +28,9 @@ class Page extends Component {
   }
 
   clearSearch(ev) {
-    const results = false
-    const error = false
-    if (ev.currentTarget.classList.contains("delete")) {
-      this.setState({ error, results })
-    } else {
-      this.setState({ error, results, search: "" })
-    }
+    const ret = { results: false, error: false }
+    if (!ev.currentTarget.classList.contains("delete")) ret.search = ""
+    this.setState(ret)
   }
 
   clicky(ev) {
