@@ -49,7 +49,7 @@
     "gatsby-remark-images": "^3.0.1",
     "gatsby-remark-link-rewrite": "^0.2.1",
     "gatsby-remark-smartypants": "^2.0.7",
-    "gatsby-source-filesystem": "^2.0.13",
+    "gatsby-source-filesystem": "^2.0.16",
     "gatsby-transformer-remark": "^2.2.0",
     "lunr": "^2.3.5",
     "lunr-languages": "^1.0.0",
