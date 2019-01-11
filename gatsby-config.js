@@ -12,15 +12,8 @@ module.exports = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "miscdocs",
-        path: __dirname,
-        ignore: [
-          "**/.cache",
-          "**/.git",
-          "**/public",
-          "**/src",
-          "**/*.json",
-          "**/*.js",
-        ],
+        path: `${__dirname}/content`,
+        ignore: ["**/.git"],
       },
     },
     {
