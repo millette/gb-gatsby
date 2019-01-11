@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -9,10 +11,10 @@ const { resolve } = require("path")
 
 // npm
 const { createFilePath } = require("gatsby-source-filesystem")
-const visit = require("unist-util-visit")
-const lunr = require("lunr")
-require("lunr-languages/lunr.stemmer.support")(lunr)
-require("lunr-languages/lunr.fr")(lunr)
+// const visit = require("unist-util-visit")
+
+// self
+const { lunr } = require("./utils")
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
@@ -38,6 +40,7 @@ exports.createPages = ({ graphql, actions }) => {
               slug
             }
             htmlAst
+            rawMarkdownBody
             headings(depth: h1) {
               value
             }
@@ -47,21 +50,47 @@ exports.createPages = ({ graphql, actions }) => {
     }
   `).then(({ data: { allMarkdownRemark: { edges } } }) => {
     const component = resolve("./src/templates/blog-post.js")
+    const titles = {}
 
     // function () since we want lunr's this
     const idx = lunr(function() {
       this.use(lunr.fr)
       this.ref("slug")
-      this.field("value", { boost: 2 })
-      this.field("h1", { boost: 5 })
+      this.field("rawMarkdownBody", { boost: 3 })
+      this.field("slug", { boost: 4 })
+      this.field("value", { boost: 5 })
+      // this.metadataWhitelist = ['position']
+      // let n = 0
 
-      edges.forEach(({ node: { headings, htmlAst, fields: { slug } } }) => {
-        const h1 = headings.value
+      // edges.forEach(({ node: { headings, rawMarkdownBody, htmlAst, fields: { slug } } }) => {
+      edges.forEach(
+        ({
+          node: {
+            headings: [{ value }],
+            rawMarkdownBody,
+            fields: { slug },
+          },
+        }) => {
+          titles[slug] = value
+          const o = { value, slug, rawMarkdownBody }
+          // console.log('OOO:', o)
+          this.add(o)
+        }
+      )
+      // const h1 = headings.value
+      // ++n
+      // if (h1) this.add({ h1, slug, id: `${slug}:${n}` })
+      // if (h1) this.add({ h1, slug, value: rawMarkdownBody })
+      /*
         visit(htmlAst, { type: "text" }, ({ value }) => {
           value = value.trim()
-          if (value) this.add({ h1, value, slug })
+          if (value) {
+            ++n
+            this.add({ value, slug, id: `${slug}:${n}` })
+          }
         })
-      })
+        */
+      // })
     })
 
     edges.forEach(({ node: { fields: { slug } } }) =>
@@ -71,6 +100,7 @@ exports.createPages = ({ graphql, actions }) => {
         context: {
           slug,
           idx,
+          titles,
         },
       })
     )
