@@ -76,19 +76,8 @@ exports.createPages = ({ graphql, actions }) => {
     }) => {
       const nodes = edges.map(({ node }) => node)
       const component = resolve("./src/templates/blog-post.js")
-
       const pages = allPages(htmlAst)
 
-      /*
-      const pages = []
-
-      const visitor = ({ properties: { href }, children: [{ value }] }) =>
-        pages.push({ href, value })
-      visit(htmlAst, { tagName: "a" }, visitor)
-      */
-
-      // const idx =
-      // edges.forEach(({ node: { fields: { slug } } }) =>
       nodes.forEach(({ fields: { slug } }) =>
         createPage({
           path: slug,
@@ -99,6 +88,7 @@ exports.createPages = ({ graphql, actions }) => {
           },
         })
       )
+
       return writeFileP(
         "public/search-index.json",
         // function () since we want lunr's this
@@ -109,7 +99,6 @@ exports.createPages = ({ graphql, actions }) => {
           this.field("slug", { boost: 4 })
           this.field("value", { boost: 5 })
 
-          // edges.forEach(
           nodes.forEach(
             ({ headings: [{ value }], rawMarkdownBody, fields: { slug } }) =>
               this.add({ value, slug, rawMarkdownBody })
