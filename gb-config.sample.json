@@ -1,0 +1,17 @@
+{
+  "#COMMENT": "Override with a content/gb-config.json file.",
+  "siteMetadata": {
+    "title": "EDM5240-H2019",
+    "description": "Technologies de l'information appliquées au journalisme [ou journalisme informatique] - Session d'hiver 2019.",
+    "author": "@jeanhuguesroy",
+    "lang": "fr"
+  },
+  "manifest": {
+    "name": "Technologies de l'information appliquées au journalisme",
+    "short_name": "EDM5240-H2019",
+    "start_url": "/",
+    "background_color": "#663399",
+    "theme_color": "#663399",
+    "display": "minimal-ui"
+  }
+}

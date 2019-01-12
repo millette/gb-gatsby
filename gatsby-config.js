@@ -1,11 +1,25 @@
+const defaultConfig = require("./gb-config.sample.json")
+
+let config
+
+try {
+  const userConfig = require("./content/gb-config.json")
+  config = {
+    siteMetadata: {
+      ...defaultConfig.siteMetadata,
+      ...userConfig.siteMetadata,
+    },
+    manifest: {
+      ...defaultConfig.manifest,
+      ...userConfig.manifest,
+    },
+  }
+} catch (e) {
+  config = defaultConfig
+}
+
 module.exports = {
-  siteMetadata: {
-    title: "EDM5240-H2019",
-    description:
-      "Technologies de l'information appliquées au journalisme [ou journalisme informatique] - Session d'hiver 2019.",
-    author: "@jeanhuguesroy",
-    lang: "fr",
-  },
+  siteMetadata: config.siteMetadata,
   plugins: [
     "gatsby-plugin-no-sourcemaps",
     "gatsby-plugin-react-helmet",
@@ -78,15 +92,7 @@ module.exports = {
     "gatsby-plugin-sharp",
     {
       resolve: "gatsby-plugin-manifest",
-      options: {
-        name: "Technologies de l'information appliquées au journalisme",
-        short_name: "EDM5240-H2019",
-        start_url: "/",
-        background_color: "#663399",
-        theme_color: "#663399",
-        display: "minimal-ui",
-        // icon: "src/images/gatsby-icon.png", // This path is relative to the root of the site.
-      },
+      options: config.manifest,
     },
     // To learn more, visit: https://gatsby.app/offline
     "gatsby-plugin-offline",
