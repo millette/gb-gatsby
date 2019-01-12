@@ -11,6 +11,7 @@ const { resolve } = require("path")
 
 // npm
 const { createFilePath } = require("gatsby-source-filesystem")
+const visit = require("unist-util-visit")
 
 // self
 const { lunr } = require("./utils")
@@ -31,6 +32,10 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
   return graphql(`
     query {
+      summary: markdownRemark(fields: { slug: { eq: "/SUMMARY/" } }) {
+        htmlAst
+      }
+
       allMarkdownRemark(filter: { fields: { slug: { ne: "/SUMMARY/" } } }) {
         totalCount
         edges {
@@ -46,43 +51,50 @@ exports.createPages = ({ graphql, actions }) => {
         }
       }
     }
-  `).then(({ data: { allMarkdownRemark: { edges } } }) => {
-    const component = resolve("./src/templates/blog-post.js")
-    const titles = {}
+  `).then(
+    ({
+      data: {
+        summary: { htmlAst },
+        allMarkdownRemark: { edges },
+      },
+    }) => {
+      const component = resolve("./src/templates/blog-post.js")
+      const pages = []
 
-    // function () since we want lunr's this
-    const idx = lunr(function() {
-      this.use(lunr.fr)
-      this.ref("slug")
-      this.field("rawMarkdownBody", { boost: 3 })
-      this.field("slug", { boost: 4 })
-      this.field("value", { boost: 5 })
+      const visitor = ({ properties: { href }, children: [{ value }] }) =>
+        pages.push({ href, value })
+      visit(htmlAst, { tagName: "a" }, visitor)
 
-      edges.forEach(
-        ({
-          node: {
-            headings: [{ value }],
-            rawMarkdownBody,
-            fields: { slug },
-          },
-        }) => {
-          titles[slug] = value
-          const o = { value, slug, rawMarkdownBody }
-          this.add(o)
-        }
-      )
-    })
+      // function () since we want lunr's this
+      const idx = lunr(function() {
+        this.use(lunr.fr)
+        this.ref("slug")
+        this.field("rawMarkdownBody", { boost: 3 })
+        this.field("slug", { boost: 4 })
+        this.field("value", { boost: 5 })
 
-    edges.forEach(({ node: { fields: { slug } } }) =>
-      createPage({
-        path: slug,
-        component,
-        context: {
-          slug,
-          idx,
-          titles,
-        },
+        edges.forEach(
+          ({
+            node: {
+              headings: [{ value }],
+              rawMarkdownBody,
+              fields: { slug },
+            },
+          }) => this.add({ value, slug, rawMarkdownBody })
+        )
       })
-    )
-  })
+
+      edges.forEach(({ node: { fields: { slug } } }) =>
+        createPage({
+          path: slug,
+          component,
+          context: {
+            slug,
+            idx,
+            pages,
+          },
+        })
+      )
+    }
+  )
 }
