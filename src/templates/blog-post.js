@@ -86,6 +86,16 @@ class Page extends Component {
     }
   }
 
+  componentDidMount() {
+    const aEl = document.querySelector(
+      `.summary-toc.md2html a[href="${document.location.pathname}"]`
+    )
+    if (aEl) {
+      aEl.classList.add("has-text-info")
+      aEl.scrollIntoView(false)
+    }
+  }
+
   render() {
     const {
       html,
@@ -129,7 +139,10 @@ class Page extends Component {
                   </div>
                 </div>
 
-                <div dangerouslySetInnerHTML={{ __html }} />
+                <div
+                  className="summary-toc md2html"
+                  dangerouslySetInnerHTML={{ __html }}
+                />
               </div>
               <div className="column">
                 <Menubar
