@@ -74,7 +74,11 @@ class Page extends Component {
         search,
         results: this.state.idx
           .search(ev.target.value)
-          .map(({ ref }) => ({ ref, title: this.state.titles[ref] }))
+          .map(
+            ({ ref }) =>
+              this.state.titles[ref] && { ref, title: this.state.titles[ref] }
+          )
+          .filter(Boolean)
           .slice(0, 7),
       })
     } catch (error) {
