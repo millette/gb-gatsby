@@ -18,9 +18,7 @@ const renderAst = new rehypeReact({
 class Page extends Component {
   constructor(props) {
     super(props)
-    const idx = lunr.Index.load(props.pageContext.idx)
     const titles = props.pageContext.titles
-    this.state = { hidden: false, idx, titles, search: "" }
     this.clicky = this.clicky.bind(this)
     this.change = this.change.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
@@ -32,6 +30,26 @@ class Page extends Component {
     const visitor = ({ properties: { href }, children: [{ value }] }) =>
       this.pages.push({ href, value })
     visit(props.data.summary.htmlAst, { tagName: "a" }, visitor)
+
+    const idx = this.pages
+      .map(({ href }) => href)
+      .indexOf(document.location.pathname)
+
+    const more = {}
+    if (idx !== -1) {
+      const prev = idx - 1
+      const next = idx + 1
+      if (prev >= 0) more.prev = this.pages[prev]
+      if (next < this.pages.length) more.next = this.pages[next]
+    }
+
+    this.state = {
+      hidden: false,
+      idx: lunr.Index.load(props.pageContext.idx),
+      titles,
+      search: "",
+      ...more,
+    }
   }
 
   clearSearch(ev) {
@@ -49,19 +67,6 @@ class Page extends Component {
     this.setState({ hidden })
   }
 
-  componentDidMount() {
-    const idx = this.pages
-      .map(({ href }) => href)
-      .indexOf(document.location.pathname)
-    if (idx === -1) return
-    const prev = idx - 1
-    const next = idx + 1
-    this.setState({
-      prev: prev >= 0 && this.pages[prev],
-      next: next < this.pages.length && this.pages[next],
-    })
-  }
-
   change(ev) {
     const search = ev.target.value
     if (!search) return this.setState({ error: false, search, results: false })
@@ -75,8 +80,6 @@ class Page extends Component {
           .slice(0, 7),
       })
     } catch (error) {
-      // FIXME: Tell user about error in query
-      console.error("SEARCH ERROR", error)
       this.setState({ search, error })
     }
   }
