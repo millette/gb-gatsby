@@ -8,6 +8,14 @@
 
 // core
 const { resolve } = require("path")
+const { writeFile } = require("fs")
+
+const writeFileP = (file, data) =>
+  new Promise((resolve, reject) =>
+    writeFile(file, JSON.stringify(data), (err) =>
+      err ? reject(err) : resolve()
+    )
+  )
 
 // npm
 const { createFilePath } = require("gatsby-source-filesystem")
@@ -90,11 +98,12 @@ exports.createPages = ({ graphql, actions }) => {
           component,
           context: {
             slug,
-            idx,
+            // idx,
             pages,
           },
         })
       )
+      return writeFileP("public/search-index.json", idx)
     }
   )
 }
