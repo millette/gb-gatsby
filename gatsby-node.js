@@ -10,6 +10,13 @@
 const { resolve } = require("path")
 const { writeFile } = require("fs")
 
+// npm
+const { createFilePath } = require("gatsby-source-filesystem")
+const visit = require("unist-util-visit")
+
+// self
+const { lunr } = require("./utils")
+
 const writeFileP = (file, data) =>
   new Promise((resolve, reject) =>
     writeFile(file, JSON.stringify(data), (err) =>
@@ -17,12 +24,13 @@ const writeFileP = (file, data) =>
     )
   )
 
-// npm
-const { createFilePath } = require("gatsby-source-filesystem")
-const visit = require("unist-util-visit")
-
-// self
-const { lunr } = require("./utils")
+const allPages = (ast) => {
+  const pages = []
+  const visitor = ({ properties: { href }, children: [{ value }] }) =>
+    pages.push({ href, value })
+  visit(ast, { tagName: "a" }, visitor)
+  return pages
+}
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions
@@ -66,44 +74,48 @@ exports.createPages = ({ graphql, actions }) => {
         allMarkdownRemark: { edges },
       },
     }) => {
+      const nodes = edges.map(({ node }) => node)
       const component = resolve("./src/templates/blog-post.js")
+
+      const pages = allPages(htmlAst)
+
+      /*
       const pages = []
 
       const visitor = ({ properties: { href }, children: [{ value }] }) =>
         pages.push({ href, value })
       visit(htmlAst, { tagName: "a" }, visitor)
+      */
 
-      // function () since we want lunr's this
-      const idx = lunr(function() {
-        this.use(lunr.fr)
-        this.ref("slug")
-        this.field("rawMarkdownBody", { boost: 3 })
-        this.field("slug", { boost: 4 })
-        this.field("value", { boost: 5 })
-
-        edges.forEach(
-          ({
-            node: {
-              headings: [{ value }],
-              rawMarkdownBody,
-              fields: { slug },
-            },
-          }) => this.add({ value, slug, rawMarkdownBody })
-        )
-      })
-
-      edges.forEach(({ node: { fields: { slug } } }) =>
+      // const idx =
+      // edges.forEach(({ node: { fields: { slug } } }) =>
+      nodes.forEach(({ fields: { slug } }) =>
         createPage({
           path: slug,
           component,
           context: {
             slug,
-            // idx,
             pages,
           },
         })
       )
-      return writeFileP("public/search-index.json", idx)
+      return writeFileP(
+        "public/search-index.json",
+        // function () since we want lunr's this
+        lunr(function() {
+          this.use(lunr.fr)
+          this.ref("slug")
+          this.field("rawMarkdownBody", { boost: 3 })
+          this.field("slug", { boost: 4 })
+          this.field("value", { boost: 5 })
+
+          // edges.forEach(
+          nodes.forEach(
+            ({ headings: [{ value }], rawMarkdownBody, fields: { slug } }) =>
+              this.add({ value, slug, rawMarkdownBody })
+          )
+        })
+      )
     }
   )
 }
