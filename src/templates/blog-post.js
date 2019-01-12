@@ -26,9 +26,7 @@ class Page extends Component {
       titles,
     }
 
-    const pageN = pages
-      .map(({ href }) => href)
-      .indexOf(document.location.pathname)
+    const pageN = pages.map(({ href }) => href).indexOf(props.location.pathname)
 
     if (pageN !== -1) {
       const prev = pageN - 1
