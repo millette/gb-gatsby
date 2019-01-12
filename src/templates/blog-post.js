@@ -12,22 +12,23 @@ import SEO from "../components/seo"
 class Page extends Component {
   constructor(props) {
     super(props)
-    const idx = lunr.Index.load(props.pageContext.idx)
     const pages = props.pageContext.pages
-    const titles = pages.map(({ value }) => value)
-    this.clicky = this.clicky.bind(this)
-    this.change = this.change.bind(this)
-    this.clearSearch = this.clearSearch.bind(this)
+
+    const titles = {}
+    pages.forEach(({ href, value }) => {
+      titles[href] = value
+    })
 
     this.state = {
-      hidden: false,
       search: "",
-      idx,
       titles,
     }
 
-    const pageN = pages.map(({ href }) => href).indexOf(props.location.pathname)
+    this.clicky = this.clicky.bind(this)
+    this.search = this.search.bind(this)
+    this.clearSearch = this.clearSearch.bind(this)
 
+    const pageN = pages.map(({ href }) => href).indexOf(props.location.pathname)
     if (pageN !== -1) {
       const prev = pageN - 1
       const next = pageN + 1
@@ -51,9 +52,22 @@ class Page extends Component {
     this.setState({ hidden })
   }
 
-  change(ev) {
+  search(ev) {
+    ev.persist()
     const search = ev.target.value
     if (!search) return this.setState({ error: false, search, results: false })
+
+    this.setState({ search })
+    if (!this.state.idx) {
+      return fetch("/search-index.json")
+        .then((res) => res.json())
+        .then((idx) => {
+          this.setState({ idx: lunr.Index.load(idx) })
+          return this.search(ev)
+        })
+        .catch((error) => this.setState({ error }))
+    }
+
     try {
       this.setState({
         error: false,
@@ -97,7 +111,7 @@ class Page extends Component {
                       <input
                         className="input is-small"
                         type="text"
-                        onChange={this.change}
+                        onChange={this.search}
                         value={this.state.search}
                       />
 
