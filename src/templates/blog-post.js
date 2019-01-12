@@ -1,7 +1,6 @@
 // npm
 import React, { Component } from "react"
 import { graphql, Link } from "gatsby"
-import visit from "unist-util-visit"
 import rehypeReact from "rehype-react"
 
 // self
@@ -18,37 +17,30 @@ const renderAst = new rehypeReact({
 class Page extends Component {
   constructor(props) {
     super(props)
-    const titles = props.pageContext.titles
+    const idx = lunr.Index.load(props.pageContext.idx)
+    const pages = props.pageContext.pages
+    const titles = pages.map(({ value }) => value)
     this.clicky = this.clicky.bind(this)
     this.change = this.change.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
     this.htmlAst = renderAst(props.data.summary.htmlAst)
 
-    // FIXME: replaces this.pages with props.pageContext.titles
-    this.pages = []
+    this.state = {
+      hidden: false,
+      search: "",
+      idx,
+      titles,
+    }
 
-    const visitor = ({ properties: { href }, children: [{ value }] }) =>
-      this.pages.push({ href, value })
-    visit(props.data.summary.htmlAst, { tagName: "a" }, visitor)
-
-    const idx = this.pages
+    const pageN = pages
       .map(({ href }) => href)
       .indexOf(document.location.pathname)
 
-    const more = {}
-    if (idx !== -1) {
-      const prev = idx - 1
-      const next = idx + 1
-      if (prev >= 0) more.prev = this.pages[prev]
-      if (next < this.pages.length) more.next = this.pages[next]
-    }
-
-    this.state = {
-      hidden: false,
-      idx: lunr.Index.load(props.pageContext.idx),
-      titles,
-      search: "",
-      ...more,
+    if (pageN !== -1) {
+      const prev = pageN - 1
+      const next = pageN + 1
+      if (prev >= 0) this.state.prev = pages[prev]
+      if (next < pages.length) this.state.next = pages[next]
     }
   }
 
