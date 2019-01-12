@@ -101,7 +101,14 @@ exports.createPages = ({ graphql, actions }) => {
 
           nodes.forEach(
             ({ headings: [{ value }], rawMarkdownBody, fields: { slug } }) =>
-              this.add({ value, slug, rawMarkdownBody })
+              this.add({
+                value,
+                slug,
+                rawMarkdownBody: rawMarkdownBody.replace(
+                  /[0-9 ';:&#,.!?/()\[\]]+/g,
+                  " "
+                ),
+              })
           )
         })
       )
