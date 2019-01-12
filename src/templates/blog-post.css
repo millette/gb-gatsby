@@ -4,32 +4,8 @@
   position: sticky;
   top: 5vh;
   padding-right: 2rem;
-  transform: translateX(-100%);
 }
 
 #summary-toc li > a {
   display: block;
-}
-
-#summary-toc.slide-in {
-  animation: slide-in 0.3s forwards;
-}
-
-#summary-toc.slide-out {
-  animation: slide-out 0.3s forwards;
-}
-
-@keyframes slide-in {
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-@keyframes slide-out {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
 }
