@@ -91,7 +91,7 @@ class Page extends Component {
       `.summary-toc.md2html a[href="${document.location.pathname}"]`
     )
     if (aEl) {
-      aEl.classList.add("has-text-info")
+      aEl.classList.add("has-text-info", "has-text-weight-bold")
       aEl.scrollIntoView(false)
     }
   }
