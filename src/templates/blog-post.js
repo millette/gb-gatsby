@@ -60,8 +60,9 @@ class Page extends Component {
     this.setState({ search })
     if (!this.state.idx) {
       return fetch("/search-index.json")
-        .then((res) => res.json())
+        .then((res) => res.ok && res.json())
         .then((idx) => {
+          if (!idx) throw new Error("Couldn't load search index.")
           this.setState({ idx: lunr.Index.load(idx) })
           return this.search(ev)
         })
@@ -74,10 +75,14 @@ class Page extends Component {
         search,
         results: this.state.idx
           .search(ev.target.value)
-          .map(
-            ({ ref }) =>
-              this.state.titles[ref] && { ref, title: this.state.titles[ref] }
-          )
+          .map(({ ref }) => {
+            // skip current page
+            if (ref === document.location.pathname) return false
+
+            // skip if page isn't linked from the summary (where the titles come from)
+            if (!this.state.titles[ref]) return false
+            return { ref, title: this.state.titles[ref] }
+          })
           .filter(Boolean)
           .slice(0, 7),
       })
@@ -88,7 +93,7 @@ class Page extends Component {
 
   componentDidMount() {
     const aEl = document.querySelector(
-      `.summary-toc.md2html a[href="${document.location.pathname}"]`
+      `#summary-toc .md2html a[href="${document.location.pathname}"]`
     )
     if (aEl) {
       aEl.classList.add("has-text-info", "has-text-weight-bold")
@@ -112,8 +117,8 @@ class Page extends Component {
             <div className="columns">
               <div
                 id="summary-toc"
-                className={`column is-narrow content ${
-                  this.state.hidden ? "slide-out" : "slide-in"
+                className={`column is-narrow content${
+                  this.state.hidden ? " is-hidden" : ""
                 }`}
               >
                 <div className="field is-horizontal">
@@ -139,10 +144,7 @@ class Page extends Component {
                   </div>
                 </div>
 
-                <div
-                  className="summary-toc md2html"
-                  dangerouslySetInnerHTML={{ __html }}
-                />
+                <div className="md2html" dangerouslySetInnerHTML={{ __html }} />
               </div>
               <div className="column">
                 <Menubar
@@ -184,7 +186,10 @@ class Page extends Component {
                   )}
 
                   {!this.state.results && !this.state.error && (
-                    <div dangerouslySetInnerHTML={{ __html: html }} />
+                    <div
+                      className="main-content"
+                      dangerouslySetInnerHTML={{ __html: html }}
+                    />
                   )}
                 </div>
               </div>
