@@ -9,3 +9,7 @@
 #summary-toc li > a {
   display: block;
 }
+
+.main-content a[target="_blank"]::before {
+  content: "\29C9 ";
+}
