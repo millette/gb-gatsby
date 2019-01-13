@@ -1,6 +1,5 @@
 // npm
 import React, { Component } from "react"
-// import { withPrefix, graphql, Link } from "gatsby"
 import { graphql, Link } from "gatsby"
 
 // self
@@ -9,19 +8,6 @@ import { lunr } from "../../utils"
 import Layout from "../components/layout"
 import Menubar from "../components/menubar"
 import SEO from "../components/seo"
-
-// FIXME: pathPrefix should be taken from config
-// const pathPrefix = "/gb-gatsby"
-// const pathPrefix = "/"
-
-/*
-const pathPrefix = ""
-
-console.log('WITH-PREFIX:', 'allo', withPrefix('allo'))
-console.log('WITH-PREFIX:', '/allo', withPrefix('/allo'))
-console.log('WITH-PREFIX:', 'gb-gatsby/allo', withPrefix('gb-gatsby/allo'))
-console.log('WITH-PREFIX:', '/gb-gatsby/allo', withPrefix('/gb-gatsby/allo'))
-*/
 
 class Page extends Component {
   constructor(props) {
@@ -42,10 +28,7 @@ class Page extends Component {
     this.search = this.search.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
 
-    // const pageN = pages.map(({ href }) => href).indexOf(props.location.pathname)
     const pathPrefix = props.data.site.pathPrefix
-    console.log("PAGES:", pages)
-    console.log("pathPrefix:", JSON.stringify(pathPrefix))
     const pageN = pages
       .map(({ href }) => href)
       .indexOf(props.location.pathname.replace(pathPrefix, ""))
@@ -79,12 +62,8 @@ class Page extends Component {
     if (!search) return this.setState({ error: false, search, results: false })
 
     this.setState({ search })
-    if (!this.state.idx) {
-      // FIXME: Adapt to pathPrefix (in dev)
-      // return fetch(`/search-index.json`)
-      const pathPrefix = this.props.data.site.pathPrefix
-
-      return fetch(`${pathPrefix}/search-index.json`)
+    if (!this.state.idx)
+      return fetch(`${this.props.data.site.pathPrefix}/search-index.json`)
         .then((res) => res.ok && res.json())
         .then((idx) => {
           if (!idx) throw new Error("Couldn't load search index.")
@@ -92,7 +71,6 @@ class Page extends Component {
           return this.search(ev)
         })
         .catch((error) => this.setState({ error }))
-    }
 
     try {
       this.setState({
@@ -127,24 +105,9 @@ class Page extends Component {
   }
 
   render() {
-    const {
-      html,
-      // headings,
-      h1,
-      h2,
-    } = this.props.data.markdownRemark
-
-    // const [{ value }] = headings
+    const { html, h1, h2 } = this.props.data.markdownRemark
 
     const value = (h1 && h1[0] && h1[0].value) || (h2 && h2[0] && h2[0].value)
-    /*
-    console.log('HEADINGS:', headings)
-    console.log('HTML:', html.slice(0, 100))
-    const value = (headings && headings[0] && headings[0].value)
-      ? headings[0].value
-      : 'HMMM'
-    */
-
     const __html = this.props.data.summary.html
 
     return (
