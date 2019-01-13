@@ -18,7 +18,9 @@ const visit = require("unist-util-visit")
 const { lunr } = require("./utils")
 
 // FIXME: pathPrefix should be taken from config
-const pathPrefix = "/gb-gatsby"
+// const pathPrefix = "/gb-gatsby"
+// const pathPrefix = "/"
+const pathPrefix = ""
 
 const writeFileP = (file, data) =>
   new Promise((resolve, reject) =>

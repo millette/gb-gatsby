@@ -10,7 +10,9 @@ import Menubar from "../components/menubar"
 import SEO from "../components/seo"
 
 // FIXME: pathPrefix should be taken from config
-const pathPrefix = "/gb-gatsby"
+// const pathPrefix = "/gb-gatsby"
+// const pathPrefix = "/"
+const pathPrefix = ""
 
 class Page extends Component {
   constructor(props) {
