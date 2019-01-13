@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="fr"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="ie=edge"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><style data-href="/gb-gatsby/component---src-templates-blog-post-js.ec41b9f04c583cd0b435.css">#summary-toc{overflow-y:scroll;height:75vh;position:-webkit-sticky;position:sticky;top:5vh;padding-right:2rem}#summary-toc li>a{display:block}.main-content a[target=_blank]:before{content:"\29C9   "}.content pre{white-space:pre-wrap!important}body.bulma-flatly svg.burger{stroke:#000}body.bulma-darkly svg.burger,body.bulma-superhero svg.burger{stroke:#fff}svg.burger.clicky{cursor:pointer}</style><meta name="generator" content="Gatsby 2.0.91"/><title data-react-helmet="true">Cours 09 - Pandas 1 | EDM5240-H2019</title><link data-react-helmet="true" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.7.2/flatly/bulmaswatch.min.css" title="flatly"/><link data-react-helmet="true" rel="alternate stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.7.2/darkly/bulmaswatch.min.css" title="darkly"/><link data-react-helmet="true" rel="alternate stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulmaswatch/0.7.2/superhero/bulmaswatch.min.css" title="superhero"/><meta data-react-helmet="true" name="description" content="Technologies de l&#x27;information appliquées au journalisme [ou journalisme informatique] - Session d&#x27;hiver 2019."/><meta data-react-helmet="true" property="og:title" content="Cours 09 - Pandas 1"/><meta data-react-helmet="true" property="og:description" content="Technologies de l&#x27;information appliquées au journalisme [ou journalisme informatique] - Session d&#x27;hiver 2019."/><meta data-react-helmet="true" property="og:type" content="website"/><meta data-react-helmet="true" name="twitter:card" content="summary"/><meta data-react-helmet="true" name="twitter:creator" content="@jeanhuguesroy"/><meta data-react-helmet="true" name="twitter:title" content="Cours 09 - Pandas 1"/><meta data-react-helmet="true" name="twitter:description" content="Technologies de l&#x27;information appliquées au journalisme [ou journalisme informatique] - Session d&#x27;hiver 2019."/><script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var hash = window.decodeURI(location.hash.replace('#', ''))
+      if (hash !== '') {
+        var element = document.getElementById(hash)
+        if (element) {
+          var offset = element.offsetTop
+          // Wait for the browser to finish rendering before scrolling.
+          setTimeout((function() {
+            window.scrollTo(0, offset - 0)
+          }), 0)
+        }
+      }
+    })
+  </script><link rel="manifest" href="/gb-gatsby/manifest.webmanifest"/><meta name="theme-color" content="#663399"/><link as="script" rel="preload" href="/gb-gatsby/component---src-templates-blog-post-js-da27bc16263ddb3b0b40.js"/><link as="script" rel="preload" href="/gb-gatsby/7-dc503840892fd3298d2d.js"/><link as="script" rel="preload" href="/gb-gatsby/0-ae6663fec0386ee89075.js"/><link as="script" rel="preload" href="/gb-gatsby/app-f532a0748ae5ca10c129.js"/><link as="script" rel="preload" href="/gb-gatsby/webpack-runtime-5bfb6e59bd0a18a05698.js"/><link as="fetch" rel="preload" href="/gb-gatsby/static/d/890/path---semaine-09-pandas-1-d-0-d-ec8-frG0EevjgGWYKX5GAo26Jsb8Rnk.json" crossOrigin="use-credentials"/></head><body><noscript id="gatsby-noscript">This app works best with JavaScript enabled.</noscript><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><section class="section"><div class="container is-fluid"><div class="columns"><div id="summary-toc" class="column is-narrow content"><div class="field is-horizontal"><div class="field-label is-small"><label class="label">Chercher</label></div><div class="field-body"><p class="control is-expanded has-icons-right"><input type="text" class="input is-small" value=""/><span class="icon is-right"><i class="delete is-small"></i></span></p></div></div><div class="md2html"><h1 id="summary">Summary</h1>
+<ul>
+<li>
+<p><a href="/gb-gatsby/">Introduction</a></p>
+<ul>
+<li><a href="/gb-gatsby/objectifs/">Objectifs</a></li>
+<li><a href="/gb-gatsby/enseignant/">Enseignant</a></li>
+</ul>
+</li>
+<li>
+<p><a href="/gb-gatsby/calendrier/">Contenu</a></p>
+<ul>
+<li><a href="/gb-gatsby/semaine-01-syllabus/">Semaine 01 - Syllabus</a></li>
+<li><a href="/gb-gatsby/semaine-02-installfest/">Semaine 02 - Installfest et +</a></li>
+<li><a href="/gb-gatsby/semaine-03-unix/">Semaine 03 - UNIX</a></li>
+<li><a href="/gb-gatsby/semaine-04-python-1/">Semaine 04 - Python 1</a></li>
+<li><a href="/gb-gatsby/semaine-05-python-2/">Semaine 05 - Python 2</a></li>
+<li><a href="/gb-gatsby/semaine-06-python-3/">Semaine 06 - Python 3</a></li>
+<li><a href="/gb-gatsby/semaine-07-python-4/">Semaine 07 - Python 4</a></li>
+<li><a href="/gb-gatsby/semaine-08-relache/">Semaine 08 - Relâche</a></li>
+<li><a href="/gb-gatsby/semaine-09-pandas-1/">Semaine 09 - Pandas 1</a></li>
+<li><a href="/gb-gatsby/semaine-10-pandas-2/">Semaine 10 - Pandas 2</a></li>
+<li><a href="/gb-gatsby/semaine-11-presentations-1/">Semaine 11 - Présentations initiales</a></li>
+<li><a href="/gb-gatsby/semaine-12-visualisation-1/">Semaine 12 - Visualisation 1</a></li>
+<li><a href="/gb-gatsby/semaine-13-visualisation-2/">Semaine 13 - Visualisation 2 et SQL</a></li>
+<li><a href="/gb-gatsby/semaine-14-tutorat/">Semaine 14 - Tutorat</a></li>
+<li><a href="/gb-gatsby/semaine-15-presentations-2/">Semaine 15 - Présentations finales</a></li>
+</ul>
+</li>
+<li><a href="/gb-gatsby/travaux/">Travaux</a></li>
+<li><a href="/gb-gatsby/tutoriels/">Tutoriels</a></li>
+<li><a href="/gb-gatsby/bibliographie/">Bibliographie</a></li>
+<li>
+<p><a href="/gb-gatsby/annexes/">Annexes</a></p>
+<ul>
+<li><a href="/gb-gatsby/politiques-16-et-42/">Politiques #16 et #42</a></li>
+<li><a href="/gb-gatsby/reglement-18/">Règlement #18</a></li>
+<li><a href="/gb-gatsby/politique-23/">Politique #23</a></li>
+</ul>
+</li>
+</ul></div></div><div class="column"><nav style="position:sticky;top:0;z-index:100" class="pagination is-small is-centered notification is-radiusless" role="navigation" aria-label="pagination"><a title="Semaine 08 - Relâche" class="pagination-previous" href="/gb-gatsby/semaine-08-relache/">Page précédente</a><a title="Semaine 10 - Pandas 2" class="pagination-next" href="/gb-gatsby/semaine-10-pandas-2/">Page suivante</a><ul class="pagination-list"><svg class="button is-text is-small burger clicky" version="1.1" xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 100 100"><path stroke-width="10" stroke-linecap="round" d="M15 20L85 20M15 50L85 50M15 80L85 80"></path></svg></ul></nav><div class="content" style="padding-left:1rem"><div class="main-content"><h1 id="cours-09---pandas-1">Cours 09 - Pandas 1</h1>
+<h3 id="6-mars-2019">6 mars 2019</h3>
+<hr>
+<p><span
+    class="gatsby-resp-image-wrapper"
+    style="position: relative; display: block;  max-width: 600px; margin-left: auto; margin-right: auto;"
+  >
+    <span
+      class="gatsby-resp-image-background-image"
+      style="padding-bottom: 20.833333333333336%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAECAYAAACOXx+WAAAACXBIWXMAAA9hAAAPYQGoP6dpAAABT0lEQVQY0wFEAbv+ADg8PgAtLi4EISMkAh4gIQUgISELLS0uEh4iJAIAAAAApbS+DNTa3ZLV3uWd8O7skMPGyXDZ3eSa4+nincDLuH/d3eB8+/P8m+/q7aPj3eRHAAEAAAcVFRRcISEhVR4dHVAiIiJjISAgZCIiIlogGhc7YJW6Ep3B2v/O6///2+rz/sHJ1cX86eb/5uve/+HLweGXxo3c8f/v/+//9f+Swo9/ACsyNgYjKCojREpOGl9rchdNU1cTREtPGUpPUx4AAAAO3NnYE9Xi6/a62vD/o8fg89PZ17zZ2MH/4tfC/+nh7NeZkEjSn5I+/7+oS/+wk0p5ALvc7wPW+v8P////BbnW5xDE4vQNwuP2ENn4/wsAAAAAuby/EPPv68rg5+za2OHoyNjW0ZvS2tHW4OPj2urp5bFlhKKtPW+Y12Z3geJ/kKVjtW205mBPdDMAAAAASUVORK5CYII='); background-size: cover; display: block;"
+    ></span>
+    <img
+        class="gatsby-resp-image-image"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;"
+        alt="Logo de Pandas"
+        title=""
+        src="/gb-gatsby/static/75f9cde5e4170d8ad6a6b799adfaf43e/fe4bf/pandas_logo.png"
+        srcset="/gb-gatsby/static/75f9cde5e4170d8ad6a6b799adfaf43e/8e6bf/pandas_logo.png 336w,
+/gb-gatsby/static/75f9cde5e4170d8ad6a6b799adfaf43e/fe4bf/pandas_logo.png 600w"
+        sizes="(max-width: 600px) 100vw, 600px"
+      />
+  </span></p>
+<p>Comme je l’indiquais un peu plus tôt, <a href="http://pandas.pydata.org/" target="_blank" rel="noopener noreferrer">pandas</a> est une bibliothèque Python. En informatique, une bibliothèque est un module, un ajout, un « extra », en quelque sorte, qui vient permettre à un langage de faire des choses qu’il ne peut pas faire, à la base. Ce que pandas ajoute à Python est l’analyse des données.</p>
+<p>On va en voir toute la puissance en interrogeant des bases de données trop lourdes pour être analysées avec un tableur comme <em>Excel</em> ou <em>Calc</em>.</p>
+<p><span
+    class="gatsby-resp-image-wrapper"
+    style="position: relative; display: block;  max-width: 279px; margin-left: auto; margin-right: auto;"
+  >
+    <span
+      class="gatsby-resp-image-background-image"
+      style="padding-bottom: 117.92114695340501%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAYCAYAAAD6S912AAAACXBIWXMAAAsSAAALEgHS3X78AAAEnUlEQVQ4y5VUbUxbZRQ+997SDtgowoSQ6ZZMBy6Z/BgzTGO2aMSwTQa0vS2lpV8U+dAZP7i3vbe0UDqCoIwtxrgF2maRaCQhWfyzH84Yv374w7glKpnJtpgtm9vgXiCwOB25nvctLW3QmL3JyTnnfe95zsc95wDg6e7pga7ubiKC0OOC+TeoCGpID6rMIdchTxE5gUAQsk9vr5Cjg9vjYQlF3u6g+ly4iABxSgA4pReYOT+A8hZSANhL0naKGgxK5aIYGEeqo4EIIhMMygC81ZoDfj1YyP7tgf89UkAYHR8/qSHgtWh0kCV3KKcefe3tXl+7X9b+WjfAdF9WJeYU0leqxF5E/i3SR3Oyvpm8m4XTu4Oi8CuCUBQRIwwE1gC9Pt/X7T7PXSIvh2CXIjHfaFHQtGGkIaTja0T0QdDw/ZIWgr3ZEQclKSv8Lr4M9mub/gzBwXt9aBQDTZXZq1jHL9RQ3lkSGfIk/pTzeH95dYBBBwwBdhH7m3IBR/j5/nqAH4XHqKKF4WlFYpfR6GM1UvjswsiTRf9Wu8Wx6kI1sqUGS/KBIrP3FQkOk3tF1nGZj74frMub7ysYRaDnso1/6NZxtwI67oag424HOO7yMeCy3+cjxqfUPsOJu9HyYqLfi25OPTwY3Vb04MNnqKb1A4cps2mjjg4/5XZbbjfMi0Db58rJVwzae2WPEPmCWAOwOlIGYDzHAKzAp1278+xOD+fxetn6+npDS0tLOfmwsbGRIbytrc1gsVisTU1NjxL9dXudkaLXxHR+t8OY8cZbLG7eYm70eDy1Vqv1BZfLdcRutw85HI43zWaznYDg2Wez2awmk2mioaHhgNPpbMXvhtHugMViHnK73fszgGjwGhq2IWA9AllbW1vbkffEYrGtGGUA37H/rafxrozn+Q6MvgoBz3Z2drrR7pC9pUXKqQfPWwSr6WgVGsoYlYCAB9FwAiMQMaJd6KgGAcfXnPvRyYsIZGpuNtn4xsMVTqeD1zQtBdbmaK008zZa+U86q/S00b3e7WjgycrAh/qOtO5weelPi/heyrTWBW+6AWqP5y31byleGijamX78UtijTwhHDER+1WnR8c1H84l8pud59jfRyJJOOOc2UFClv2jbH+HSCjqu/cXraSsh/Zgazn8HHuKofZucuNomFoZ30hZSwwUAs73FKU8SW4KjdANH6xqO2TElXLBvcXhHSbo2hC+eqDai02psZj+O5U84kiu4OCopmMxlehduhktoAe7I+RUIfFUbBW0pxGhocB1HcVaNbP5F7dPPov470qo2grMuwSLKeyiYlJogdAbw2cTYhlQUmRslBmSz0C0TWye8v49ZTGJ6pTlguMRxxgHi8TgFSSQSkWR88uJEcooO++2BsscxDQdGMYxGZ5DeRyAfRvFEpoYSQ8EUkURXuB4Rgu2dmprSZmZmtEQ8fmVZzF0CGzIQgcVSMJnIwvm5HyBgKdLP09PTGvJJcvfdmJW7E8rnlCBwJC3CcVVxuLaYhXcr4VZt6q+q0a0bwJg1XoF0KJlM5q3pqbRkFjuAppdJC7sBVj53/ncKadAsPYc/zPkHdekFvVWwItgAAAAASUVORK5CYII='); background-size: cover; display: block;"
+    ></span>
+    <img
+        class="gatsby-resp-image-image"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;box-shadow:inset 0px 0px 0px 400px white;"
+        alt="Logo de Jupyter"
+        title=""
+        src="/gb-gatsby/static/68b755fdeacffe47fcfaecb8b7c40795/57cbc/logo-jupyter.png"
+        srcset="/gb-gatsby/static/68b755fdeacffe47fcfaecb8b7c40795/57cbc/logo-jupyter.png 279w"
+        sizes="(max-width: 279px) 100vw, 279px"
+      />
+  </span></p>
+<p>On va se servir de pandas en utilisant ce qu’on appelle des <a href="https://jupyter.org/" target="_blank" rel="noopener noreferrer"><em>« notebooks »</em> Jupyter</a>. J’aime bien ces « cahiers » qui permettent de coder dans une fenêtre de navigateur. Ils sont intégrés dans Anaconda.</p>
+<p>Il est plus difficile de s’en servir avec CodeAnywhere, mais <a href="https://jamesss.io/2016/12/03/how-get-jupyter-notebooks-up-and-running-on-codeanywhere/" target="_blank" rel="noopener noreferrer">ce n’est pas impossible</a>.</p>
+<p>Je vous donnerai un dernier devoir, question de bien assimiler pandas. Détails et tombée dans la section <a href="/gb-gatsby/travaux/#devoir-3">travaux</a>.</p>
+<hr>
+<h5 id="retour-au-calendrier">Retour au <a href="/gb-gatsby/calendrier/">calendrier</a></h5></div></div></div></div></div></section><footer class="footer"><div class="container is-fluid has-text-centered">EDM5240-H2019<br/>© <!-- -->2019<!-- --> <!-- -->@jeanhuguesroy</div></footer></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-templates-blog-post-js","jsonName":"semaine-09-pandas-1-d0d","path":"/semaine-09-pandas-1/"};window.dataPath="890/path---semaine-09-pandas-1-d-0-d-ec8-frG0EevjgGWYKX5GAo26Jsb8Rnk";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-f532a0748ae5ca10c129.js"],"component---node-modules-gatsby-plugin-offline-app-shell-js":["/component---node-modules-gatsby-plugin-offline-app-shell-js-8a7f9c16160d67226b2d.js"],"component---src-templates-blog-post-js":["/component---src-templates-blog-post-js.ec41b9f04c583cd0b435.css","/component---src-templates-blog-post-js-da27bc16263ddb3b0b40.js"],"component---src-pages-404-js":["/component---src-pages-404-js-67dd7cee514b2d35d0d4.js"],"pages-manifest":["/pages-manifest-0689284596dacc41965a.js"]};/*]]>*/</script><script src="/gb-gatsby/webpack-runtime-5bfb6e59bd0a18a05698.js" async=""></script><script src="/gb-gatsby/app-f532a0748ae5ca10c129.js" async=""></script><script src="/gb-gatsby/0-ae6663fec0386ee89075.js" async=""></script><script src="/gb-gatsby/7-dc503840892fd3298d2d.js" async=""></script><script src="/gb-gatsby/component---src-templates-blog-post-js-da27bc16263ddb3b0b40.js" async=""></script></body></html>
