@@ -66,6 +66,8 @@ class Page extends Component {
 
     this.setState({ search })
     if (!this.state.idx) {
+      // FIXME: Adapt to pathPrefix (in dev)
+      // return fetch(`/search-index.json`)
       return fetch(`${pathPrefix}/search-index.json`)
         .then((res) => res.ok && res.json())
         .then((idx) => {

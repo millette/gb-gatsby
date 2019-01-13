@@ -60,12 +60,10 @@ module.exports = {
             options: {
               // pattern: /^(?!https{0,1}:\/\/)\/(?gb-gatsby\/)(.+)\.md(#.*)?$/,
               // pattern: /^(?!https{0,1}:\/\/)\/{0,1}(?:gb-gatsby\/){0,1}(.+)\.md(#.*)?$/,
-
               // pattern: new RegExp(`^(?!https{0,1}:\\/\\/)\\/{0,1}(?:${pathPrefix}\\/){0,1}(.+)\\.md(#.*)?\$`),
               pattern: new RegExp(
                 `^(?!https{0,1}:\\/\\/)(?:${pathPrefix}\\/){0,1}(.+)\\.md(#.*)?\$`
               ),
-
               replace: `${pathPrefix}/$1/$2`,
             },
           },
@@ -73,9 +71,7 @@ module.exports = {
             resolve: "gatsby-remark-link-rewrite",
             options: {
               // pattern: /^\/README\/$/,
-
               pattern: new RegExp(`^${pathPrefix}\/README\/$`),
-
               replace: `${pathPrefix}/`,
               // replace: "/",
             },
