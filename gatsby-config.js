@@ -18,15 +18,9 @@ try {
   config = defaultConfig
 }
 
-// const pathPrefix = "" // or '/'
 const pathPrefix0 = "/gb-gatsby"
 const pathPrefix =
   process.argv.indexOf("--prefix-paths") === -1 ? "" : pathPrefix0
-
-/*
-if () pathPrefix = ''
-"/gb-gatsby"
-*/
 
 module.exports = {
   pathPrefix: pathPrefix0 || "/",
@@ -66,9 +60,6 @@ module.exports = {
           {
             resolve: "gatsby-remark-link-rewrite",
             options: {
-              // pattern: /^(?!https{0,1}:\/\/)\/(?gb-gatsby\/)(.+)\.md(#.*)?$/,
-              // pattern: /^(?!https{0,1}:\/\/)\/{0,1}(?:gb-gatsby\/){0,1}(.+)\.md(#.*)?$/,
-              // pattern: new RegExp(`^(?!https{0,1}:\\/\\/)\\/{0,1}(?:${pathPrefix}\\/){0,1}(.+)\\.md(#.*)?\$`),
               pattern: new RegExp(
                 `^(?!https{0,1}:\\/\\/)(?:${pathPrefix}\\/){0,1}(.+)\\.md(#.*)?\$`
               ),
@@ -78,21 +69,10 @@ module.exports = {
           {
             resolve: "gatsby-remark-link-rewrite",
             options: {
-              // pattern: /^\/README\/$/,
               pattern: new RegExp(`^${pathPrefix}\/README\/$`),
               replace: `${pathPrefix}/`,
-              // replace: "/",
             },
           },
-          /*
-          {
-            resolve: "gatsby-remark-link-rewrite",
-            options: {
-              pattern: /^\/(.*)$/,
-              replace: `${pathPrefix}/$1`,
-            },
-          },
-          */
           {
             resolve: "gatsby-remark-autolink-headers",
             options: {
