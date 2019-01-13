@@ -12,23 +12,10 @@ const { writeFile } = require("fs")
 
 // npm
 const { createFilePath } = require("gatsby-source-filesystem")
-// const { withPrefix } = require("gatsby")
 const visit = require("unist-util-visit")
 
 // self
 const { lunr } = require("./utils")
-
-/*
-console.log('WITH-PREFIX:', 'allo', withPrefix('allo'))
-console.log('WITH-PREFIX:', '/allo', withPrefix('/allo'))
-console.log('WITH-PREFIX:', 'gb-gatsby/allo', withPrefix('gb-gatsby/allo'))
-console.log('WITH-PREFIX:', '/gb-gatsby/allo', withPrefix('/gb-gatsby/allo'))
-*/
-
-// FIXME: pathPrefix should be taken from config
-// const pathPrefix = "/gb-gatsby"
-// const pathPrefix = "/"
-// const pathPrefix = ""
 
 const writeFileP = (file, data) =>
   new Promise((resolve, reject) =>
@@ -37,10 +24,7 @@ const writeFileP = (file, data) =>
     )
   )
 
-// console.log('ARGS', process.argv)
-
 const allPages = (pp, ast) => {
-  // console.log('PATHPREFIX:', JSON.stringify(pp))
   const pages = []
   const visitor = ({ properties: { href }, children: [{ value }] }) =>
     pages.push({ href: href.replace(pp, ""), value })
@@ -60,8 +44,6 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     value,
   })
 }
-
-//      pathPrefix
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
@@ -132,21 +114,17 @@ exports.createPages = ({ graphql, actions }) => {
           this.field("value", { boost: 5 })
 
           nodes.forEach(({ h1, h2, rawMarkdownBody, fields: { slug } }) => {
-            // nodes.forEach(({ headings, rawMarkdownBody, fields: { slug } }) => {
-            // FIXME: Headings are optional
-            // if (!headings || !headings[0] || !headings[0].value) return
             const value =
               (h1 && h1[0] && h1[0].value) || (h2 && h2[0] && h2[0].value)
-            if (!value) return
-            // const value = headings[0].value
-            this.add({
-              value,
-              slug,
-              rawMarkdownBody: rawMarkdownBody.replace(
-                /[0-9 ';:&#,.!?/()\[\]]+/g,
-                " "
-              ),
-            })
+            if (value)
+              this.add({
+                value,
+                slug,
+                rawMarkdownBody: rawMarkdownBody.replace(
+                  /[0-9 ';:&#,.!?/()\[\]]+/g,
+                  " "
+                ),
+              })
           })
         })
       )
