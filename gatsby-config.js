@@ -18,9 +18,13 @@ try {
   config = defaultConfig
 }
 
+const pathPrefix = "/gb-gatsby" // or '/'
+
 module.exports = {
-  pathPrefix: "/gb-gatsby",
-  siteMetadata: config.siteMetadata,
+  pathPrefix,
+  siteMetadata: {
+    ...config.siteMetadata,
+  },
   plugins: [
     "gatsby-plugin-no-sourcemaps",
     "gatsby-plugin-react-helmet",
@@ -54,17 +58,34 @@ module.exports = {
           {
             resolve: "gatsby-remark-link-rewrite",
             options: {
-              pattern: /^(?!https{0,1}:\/\/)\/{0,1}(.+)\.md(#.*)?$/,
-              replace: "/$1/$2",
+              // pattern: /^(?!https{0,1}:\/\/)\/(?gb-gatsby\/)(.+)\.md(#.*)?$/,
+              // pattern: /^(?!https{0,1}:\/\/)\/{0,1}(?:gb-gatsby\/){0,1}(.+)\.md(#.*)?$/,
+
+              // pattern: new RegExp(`^(?!https{0,1}:\\/\\/)\\/{0,1}(?:${pathPrefix}\\/){0,1}(.+)\\.md(#.*)?\$`),
+              pattern: new RegExp(
+                `^(?!https{0,1}:\\/\\/)(?:${pathPrefix}\\/){0,1}(.+)\\.md(#.*)?\$`
+              ),
+
+              replace: `${pathPrefix}/$1/$2`,
             },
           },
           {
             resolve: "gatsby-remark-link-rewrite",
             options: {
               pattern: /^\/README\/$/,
-              replace: "/",
+              replace: `${pathPrefix}/`,
+              // replace: "/",
             },
           },
+          /*
+          {
+            resolve: "gatsby-remark-link-rewrite",
+            options: {
+              pattern: /^\/(.*)$/,
+              replace: `${pathPrefix}/$1`,
+            },
+          },
+          */
           {
             resolve: "gatsby-remark-autolink-headers",
             options: {
@@ -93,7 +114,10 @@ module.exports = {
     "gatsby-plugin-sharp",
     {
       resolve: "gatsby-plugin-manifest",
-      options: config.manifest,
+      options: {
+        ...config.manifest,
+        start_url: `${pathPrefix}/`,
+      },
     },
     // To learn more, visit: https://gatsby.app/offline
     "gatsby-plugin-offline",
