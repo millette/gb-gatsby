@@ -29,11 +29,9 @@ const writeFileP = (file, data) =>
 
 const allPages = (ast) => {
   const pages = []
-  const visitor = ({ properties: { href }, children: [{ value }] }) => {
-    const href2 = href.replace(pathPrefix, "")
-    console.log("HREF", href, href2, value)
-    pages.push({ href: href2, value })
-  }
+  const visitor = ({ properties: { href }, children: [{ value }] }) =>
+    pages.push({ href: href.replace(pathPrefix, ""), value })
+
   visit(ast, { tagName: "a" }, visitor)
   return pages
 }
