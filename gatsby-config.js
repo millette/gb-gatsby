@@ -18,12 +18,18 @@ try {
   config = defaultConfig
 }
 
-// const pathPrefix = "/gb-gatsby" // or '/'
-// const pathPrefix = "/" // or '/'
-const pathPrefix = "" // or '/'
+// const pathPrefix = "" // or '/'
+const pathPrefix0 = "/gb-gatsby"
+const pathPrefix =
+  process.argv.indexOf("--prefix-paths") === -1 ? "" : pathPrefix0
+
+/*
+if () pathPrefix = ''
+"/gb-gatsby"
+*/
 
 module.exports = {
-  pathPrefix: pathPrefix || "/",
+  pathPrefix: pathPrefix0 || "/",
   siteMetadata: {
     ...config.siteMetadata,
   },
