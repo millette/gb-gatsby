@@ -1,6 +1,6 @@
 {
   "name": "gb-gatsby",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Gitbook clone based on gatsby.",
   "scripts": {
     "build": "gatsby build",
