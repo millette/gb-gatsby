@@ -72,7 +72,10 @@ module.exports = {
           {
             resolve: "gatsby-remark-link-rewrite",
             options: {
-              pattern: /^\/README\/$/,
+              // pattern: /^\/README\/$/,
+
+              pattern: new RegExp(`^${pathPrefix}\/README\/$`),
+
               replace: `${pathPrefix}/`,
               // replace: "/",
             },
