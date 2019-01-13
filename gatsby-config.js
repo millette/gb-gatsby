@@ -19,6 +19,7 @@ try {
 }
 
 module.exports = {
+  pathPrefix: "/gb-gatsby",
   siteMetadata: config.siteMetadata,
   plugins: [
     "gatsby-plugin-no-sourcemaps",
