@@ -103,17 +103,19 @@ exports.createPages = ({ graphql, actions }) => {
           this.field("slug", { boost: 4 })
           this.field("value", { boost: 5 })
 
-          nodes.forEach(
-            ({ headings: [{ value }], rawMarkdownBody, fields: { slug } }) =>
-              this.add({
-                value,
-                slug,
-                rawMarkdownBody: rawMarkdownBody.replace(
-                  /[0-9 ';:&#,.!?/()\[\]]+/g,
-                  " "
-                ),
-              })
-          )
+          nodes.forEach(({ headings, rawMarkdownBody, fields: { slug } }) => {
+            // FIXME: Headings are optional
+            if (!headings || !headings[0] || !headings[0].value) return
+            const value = headings[0].value
+            this.add({
+              value,
+              slug,
+              rawMarkdownBody: rawMarkdownBody.replace(
+                /[0-9 ';:&#,.!?/()\[\]]+/g,
+                " "
+              ),
+            })
+          })
         })
       )
     }
