@@ -17,6 +17,9 @@ const visit = require("unist-util-visit")
 // self
 const { lunr } = require("./utils")
 
+// FIXME: pathPrefix should be taken from config
+const pathPrefix = "/gb-gatsby"
+
 const writeFileP = (file, data) =>
   new Promise((resolve, reject) =>
     writeFile(file, JSON.stringify(data), (err) =>
@@ -26,8 +29,11 @@ const writeFileP = (file, data) =>
 
 const allPages = (ast) => {
   const pages = []
-  const visitor = ({ properties: { href }, children: [{ value }] }) =>
-    pages.push({ href, value })
+  const visitor = ({ properties: { href }, children: [{ value }] }) => {
+    const href2 = href.replace(pathPrefix, "")
+    console.log("HREF", href, href2, value)
+    pages.push({ href: href2, value })
+  }
   visit(ast, { tagName: "a" }, visitor)
   return pages
 }

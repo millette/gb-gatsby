@@ -9,6 +9,9 @@ import Layout from "../components/layout"
 import Menubar from "../components/menubar"
 import SEO from "../components/seo"
 
+// FIXME: pathPrefix should be taken from config
+const pathPrefix = "/gb-gatsby"
+
 class Page extends Component {
   constructor(props) {
     super(props)
@@ -28,7 +31,11 @@ class Page extends Component {
     this.search = this.search.bind(this)
     this.clearSearch = this.clearSearch.bind(this)
 
-    const pageN = pages.map(({ href }) => href).indexOf(props.location.pathname)
+    // const pageN = pages.map(({ href }) => href).indexOf(props.location.pathname)
+    const pageN = pages
+      .map(({ href }) => href)
+      .indexOf(props.location.pathname.replace(pathPrefix, ""))
+
     if (pageN !== -1) {
       const prev = pageN - 1
       const next = pageN + 1
